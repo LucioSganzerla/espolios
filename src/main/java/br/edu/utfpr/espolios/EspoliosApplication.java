@@ -2,7 +2,9 @@ package br.edu.utfpr.espolios;
 
 import br.edu.utfpr.espolios.models.FragmentoChave;
 import br.edu.utfpr.espolios.models.enums.ShardType;
+import br.edu.utfpr.espolios.service.CRUD.ChaveService;
 import br.edu.utfpr.espolios.service.CRUD.FragmentoChaveService;
+import br.edu.utfpr.espolios.service.ForjarChaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +16,12 @@ public class EspoliosApplication {
 
     @Autowired
     private FragmentoChaveService fragmentoChaveService;
+
+    @Autowired
+    private ChaveService chaveService;
+
+    @Autowired
+    private ForjarChaveService forjarChaveService;
 
     public static void main(String[] args) {
         SpringApplication.run(EspoliosApplication.class, args);
@@ -41,6 +49,31 @@ public class EspoliosApplication {
 
         System.out.println("Listando fragmentos de chave...");
         fragmentoChaveService.logKeys();
+
+        System.out.println("Forjando chaves do tipo comum...");
+        forjarChaveService.forjarChave(ShardType.COMMON, 1);
+
+        System.out.println("Listando chaves...");
+        chaveService.logKeys();
+
+        System.out.println("Forjando chaves do tipo raro...");
+        forjarChaveService.forjarChave(ShardType.RARE, 1);
+
+        System.out.println("Listando chaves...");
+        chaveService.logKeys();
+
+        System.out.println("Forjando todas as chaves...");
+        forjarChaveService.forjarTodasChaves(ShardType.COMMON);
+        forjarChaveService.forjarTodasChaves(ShardType.RARE);
+        forjarChaveService.forjarTodasChaves(ShardType.EPIC);
+        forjarChaveService.forjarTodasChaves(ShardType.LEGENDARY);
+
+        System.out.println("Listando chaves...");
+        chaveService.logKeys();
+
+        System.out.println("Listando fragmentos de chave...");
+        fragmentoChaveService.logKeys();
+
 
     }
 
