@@ -1,10 +1,10 @@
 package br.edu.utfpr.espolios.models.enums;
 
-public enum ShardType {
+public enum Rarity {
     COMMON,
     RARE,
     EPIC,
     LEGENDARY;
 
-    ShardType() {}
+    Rarity() {}
 }

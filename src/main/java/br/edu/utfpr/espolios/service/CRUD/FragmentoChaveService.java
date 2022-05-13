@@ -1,7 +1,7 @@
 package br.edu.utfpr.espolios.service.CRUD;
 
 import br.edu.utfpr.espolios.models.FragmentoChave;
-import br.edu.utfpr.espolios.models.enums.ShardType;
+import br.edu.utfpr.espolios.models.enums.Rarity;
 import br.edu.utfpr.espolios.repository.FragmentoChaveRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,31 +14,31 @@ import java.util.List;
 public record FragmentoChaveService(FragmentoChaveRepository repository) {
 
     public void save(FragmentoChave chave) {
-        log.info("Salvando Chave {}", chave.getShardType());
+        log.info("Salvando Chave {}", chave.getRarity());
         repository.saveAndFlush(chave);
-        log.info("Chave Salva Tipo {}", chave.getShardType());
+        log.info("Chave Salva Tipo {}", chave.getRarity());
     }
 
-    public void increment(ShardType shardType, Integer quantity) {
-        log.info("Incrementando chave {}", shardType);
-        FragmentoChave chave = repository.findByShardType(shardType);
+    public void increment(Rarity rarity, Integer quantity) {
+        log.info("Incrementando chave {}", rarity);
+        FragmentoChave chave = repository.findByRarity(rarity);
         chave.setQuantidade(chave.getQuantidade() + quantity);
         repository.save(chave);
-        log.info("Incrementou a chave {}", shardType);
+        log.info("Incrementou a chave {}", rarity);
     }
 
-    public void decrement(ShardType shardType, Integer quantity) {
-        log.info("Decrementando chave {}", shardType);
-        FragmentoChave chave = repository.findByShardType(shardType);
+    public void decrement(Rarity rarity, Integer quantity) {
+        log.info("Decrementando chave {}", rarity);
+        FragmentoChave chave = repository.findByRarity(rarity);
         chave.setQuantidade(chave.getQuantidade() - quantity);
         repository.save(chave);
-        log.info("Decrementou a chave {}", shardType);
+        log.info("Decrementou a chave {}", rarity);
     }
 
     public void logKeys() {
         List<FragmentoChave> chaves = repository.findAll();
-        chaves.sort(Comparator.comparing(FragmentoChave::getShardType));
-        chaves.forEach(fragmento -> System.out.println(fragmento.getQuantidade() + "x - Tipo: " + fragmento.getShardType()));
+        chaves.sort(Comparator.comparing(FragmentoChave::getRarity));
+        chaves.forEach(fragmento -> System.out.println(fragmento.getQuantidade() + "x - Tipo: " + fragmento.getRarity()));
     }
 
 }

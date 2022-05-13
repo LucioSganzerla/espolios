@@ -1,6 +1,6 @@
 package br.edu.utfpr.espolios.models;
 
-import br.edu.utfpr.espolios.models.enums.ShardType;
+import br.edu.utfpr.espolios.models.enums.Rarity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,10 +29,10 @@ public class FragmentoChave {
     private Integer quantidade;
 
     @Column(updatable = false)
-    private ShardType shardType;
+    private Rarity rarity;
 
-    public FragmentoChave(int quantidade, ShardType shardType) {
+    public FragmentoChave(int quantidade, Rarity rarity) {
         this.quantidade = quantidade;
-        this.shardType = shardType;
+        this.rarity = rarity;
     }
 }
