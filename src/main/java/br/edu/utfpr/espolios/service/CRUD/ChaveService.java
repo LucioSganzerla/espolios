@@ -35,10 +35,10 @@ public record ChaveService(ChaveRepository repository) {
         log.info("Decrementou a chave {}", rarity);
     }
 
-    public void logKeys() {
+    public void log() {
         List<Chave> chaves = repository.findAll();
         chaves.sort(Comparator.comparing(Chave::getRarity));
-        chaves.forEach(chave -> System.out.println(chave.getQuantidade() + "x - Tipo: " + chave.getRarity()));
+        chaves.forEach(chave -> log.info(chave.getQuantidade() + "x - Tipo: " + chave.getRarity()));
     }
 
 }

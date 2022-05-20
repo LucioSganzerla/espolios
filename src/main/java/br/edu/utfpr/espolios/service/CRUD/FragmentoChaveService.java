@@ -35,10 +35,10 @@ public record FragmentoChaveService(FragmentoChaveRepository repository) {
         log.info("Decrementou a chave {}", rarity);
     }
 
-    public void logKeys() {
+    public void log() {
         List<FragmentoChave> chaves = repository.findAll();
         chaves.sort(Comparator.comparing(FragmentoChave::getRarity));
-        chaves.forEach(fragmento -> System.out.println(fragmento.getQuantidade() + "x - Tipo: " + fragmento.getRarity()));
+        chaves.forEach(fragmento -> log.info(fragmento.getQuantidade() + "x - Tipo: " + fragmento.getRarity()));
     }
 
 }
