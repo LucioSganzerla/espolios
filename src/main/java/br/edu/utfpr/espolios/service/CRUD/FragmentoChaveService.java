@@ -14,25 +14,25 @@ import java.util.List;
 public record FragmentoChaveService(FragmentoChaveRepository repository) {
 
     public void save(FragmentoChave chave) {
-        log.info("Salvando Chave {}", chave.getRarity());
+        log.info("Salvando Fragmento de Chave {}", chave.getRarity());
         repository.saveAndFlush(chave);
-        log.info("Chave Salva Tipo {}", chave.getRarity());
+        log.info("Fragmento deChave Salva Tipo {}", chave.getRarity());
     }
 
     public void increment(Rarity rarity, Integer quantity) {
-        log.info("Incrementando chave {}", rarity);
+        log.info("Incrementando fragmentos de chave {}", rarity);
         FragmentoChave chave = repository.findByRarity(rarity);
         chave.setQuantidade(chave.getQuantidade() + quantity);
         repository.save(chave);
-        log.info("Incrementou a chave {}", rarity);
+        log.info("Incrementou os fragmentos de chave {}", rarity);
     }
 
     public void decrement(Rarity rarity, Integer quantity) {
-        log.info("Decrementando chave {}", rarity);
+        log.info("Decrementando os fragmentos de chave {}", rarity);
         FragmentoChave chave = repository.findByRarity(rarity);
         chave.setQuantidade(chave.getQuantidade() - quantity);
         repository.save(chave);
-        log.info("Decrementou a chave {}", rarity);
+        log.info("Decrementou os fragmento de chave {}", rarity);
     }
 
     public void log() {

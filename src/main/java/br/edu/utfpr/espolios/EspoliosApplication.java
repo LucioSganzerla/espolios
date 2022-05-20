@@ -2,12 +2,15 @@ package br.edu.utfpr.espolios;
 
 import br.edu.utfpr.espolios.models.Bau;
 import br.edu.utfpr.espolios.models.FragmentoChave;
+import br.edu.utfpr.espolios.models.Loot;
 import br.edu.utfpr.espolios.models.enums.Rarity;
 import br.edu.utfpr.espolios.service.AbrirBauService;
 import br.edu.utfpr.espolios.service.CRUD.BauService;
 import br.edu.utfpr.espolios.service.CRUD.ChaveService;
 import br.edu.utfpr.espolios.service.CRUD.FragmentoChaveService;
+import br.edu.utfpr.espolios.service.CRUD.LootService;
 import br.edu.utfpr.espolios.service.ForjarChaveService;
+import br.edu.utfpr.espolios.utils.MathUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -34,12 +37,25 @@ public class EspoliosApplication {
     @Autowired
     private AbrirBauService abrirBauService;
 
+    @Autowired
+    private LootService lootService;
+
     public static void main(String[] args) {
         SpringApplication.run(EspoliosApplication.class, args);
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void doSomethingAfterStartup() {
+        log.info("Criando Loots");
+        for (int i = 0; i < 15; i++) {
+            lootService.save(new Loot(Rarity.COMMON, MathUtils.random(0, 10)));
+            lootService.save(new Loot(Rarity.RARE, MathUtils.random(10.01, 20)));
+            lootService.save(new Loot(Rarity.EPIC, MathUtils.random(20.01, 30)));
+            lootService.save(new Loot(Rarity.LEGENDARY, MathUtils.random(30.01, 200)));
+        }
+        log.info("Fim da criação dos Loots");
+
+
         log.info("Adicionando fragmentos de chave...");
         fragmentoChaveService.save(new FragmentoChave(12, Rarity.COMMON));
         fragmentoChaveService.save(new FragmentoChave(9, Rarity.RARE));
