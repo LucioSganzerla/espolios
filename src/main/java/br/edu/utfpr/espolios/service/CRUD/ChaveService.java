@@ -21,7 +21,7 @@ public record ChaveService(ChaveRepository repository) {
 
     public void increment(Rarity rarity, Integer quantity) {
         log.info("Incrementando chave {}", rarity);
-        Chave chave = repository.findChaveByRarity(rarity);
+        Chave chave = repository.findByRarity(rarity);
         chave.setQuantidade(chave.getQuantidade() + quantity);
         repository.saveAndFlush(chave);
         log.info("Incrementou a chave {}", rarity);
@@ -29,7 +29,7 @@ public record ChaveService(ChaveRepository repository) {
 
     public void decrement(Rarity rarity, Integer quantity) {
         log.info("Decrementando chave {}", rarity);
-        Chave chave = repository.findChaveByRarity(rarity);
+        Chave chave = repository.findByRarity(rarity);
         chave.setQuantidade(chave.getQuantidade() - quantity);
         repository.saveAndFlush(chave);
         log.info("Decrementou a chave {}", rarity);

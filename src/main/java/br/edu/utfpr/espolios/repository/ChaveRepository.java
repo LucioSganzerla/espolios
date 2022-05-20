@@ -1,10 +1,10 @@
 package br.edu.utfpr.espolios.repository;
 
+import br.edu.utfpr.espolios.generics.repository.EntityRepository;
 import br.edu.utfpr.espolios.models.Chave;
-import br.edu.utfpr.espolios.models.enums.Rarity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ChaveRepository extends JpaRepository<Chave, Long> {
+@Repository
+public interface ChaveRepository extends EntityRepository<Chave> {
 
-    Chave findChaveByRarity(Rarity rarity);
 }

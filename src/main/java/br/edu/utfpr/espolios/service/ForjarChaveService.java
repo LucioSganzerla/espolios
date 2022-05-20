@@ -10,14 +10,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public record ForjarChaveService(FragmentoChaveService fragmentoChaveService, ChaveService chaveService) {
+public record ForjarChaveService(FragmentoChaveService fragmentoChaveService,
+                                 ChaveService chaveService) {
 
     public void forjarChave(Rarity rarity, Integer quantidade) {
         if (this.validaQuantidadeFragmentos(rarity, quantidade)) {
             log.info("Forjando chave");
             fragmentoChaveService.decrement(rarity, quantidade * Constants.FRAGMENTOS_POR_CHAVE);
 
-            Chave chave = chaveService.repository().findChaveByRarity(rarity);
+            Chave chave = chaveService.repository().findByRarity(rarity);
             if (chave == null) {
                 log.info("A chave não possui registro, Registrando...");
                 chaveService.save(new Chave(0, rarity));
