@@ -13,7 +13,7 @@ public record AbrirBauService(BauService bauService,
 
     private boolean validaQuantidadeChaves(Rarity rarity, Integer quantidade) {
         log.info("Validando quantidade de chaves, para verificar se é possivel abrir o bau");
-        boolean resut = chaveService.repository().findByRarity(rarity).getQuantidade() >= (quantidade);
+        boolean resut = chaveService.getRepository().findByRarity(rarity).getQuantidade() >= (quantidade);
         if (resut) {
             log.info("É possível abrir " + quantidade + " baus do tipo " + rarity);
         } else {
@@ -24,7 +24,7 @@ public record AbrirBauService(BauService bauService,
 
     private boolean validaQuantidadeBaus(Rarity rarity, Integer quantidade) {
         log.info("Validando quantidade de baus");
-        boolean resut = chaveService.repository().findByRarity(rarity).getQuantidade() >= (quantidade);
+        boolean resut = chaveService.getRepository().findByRarity(rarity).getQuantidade() >= (quantidade);
         if (resut) {
             log.info("Possui " + quantidade + " baus do tipo " + rarity);
         } else {

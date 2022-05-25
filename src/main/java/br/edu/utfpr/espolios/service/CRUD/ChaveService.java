@@ -1,44 +1,22 @@
 package br.edu.utfpr.espolios.service.CRUD;
 
+import br.edu.utfpr.espolios.generics.EntityService;
+import br.edu.utfpr.espolios.generics.repository.EntityRepository;
 import br.edu.utfpr.espolios.models.Chave;
-import br.edu.utfpr.espolios.models.enums.Rarity;
-import br.edu.utfpr.espolios.repository.ChaveRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-
 @Service
 @Slf4j
-public record ChaveService(ChaveRepository repository) {
+@RequiredArgsConstructor
+public class ChaveService extends EntityService<Chave> {
 
-    public void save(Chave chave) {
-        log.info("Salvando Chave {}", chave.getRarity());
-        repository.saveAndFlush(chave);
-        log.info("Chave Salva Tipo {}", chave.getRarity());
-    }
+    private final EntityRepository<Chave> repository;
 
-    public void increment(Rarity rarity, Integer quantity) {
-        log.info("Incrementando chave {}", rarity);
-        Chave chave = repository.findByRarity(rarity);
-        chave.setQuantidade(chave.getQuantidade() + quantity);
-        repository.saveAndFlush(chave);
-        log.info("Incrementou a chave {}", rarity);
-    }
-
-    public void decrement(Rarity rarity, Integer quantity) {
-        log.info("Decrementando chave {}", rarity);
-        Chave chave = repository.findByRarity(rarity);
-        chave.setQuantidade(chave.getQuantidade() - quantity);
-        repository.saveAndFlush(chave);
-        log.info("Decrementou a chave {}", rarity);
-    }
-
-    public void log() {
-        List<Chave> chaves = repository.findAll();
-        chaves.sort(Comparator.comparing(Chave::getRarity));
-        chaves.forEach(chave -> log.info(chave.getQuantidade() + "x - Tipo: " + chave.getRarity()));
+    @Override
+    public EntityRepository<Chave> getRepository() {
+        return repository;
     }
 
 }

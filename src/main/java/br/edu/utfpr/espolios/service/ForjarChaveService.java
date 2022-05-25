@@ -18,7 +18,7 @@ public record ForjarChaveService(FragmentoChaveService fragmentoChaveService,
             log.info("Forjando chave");
             fragmentoChaveService.decrement(rarity, quantidade * Constants.FRAGMENTOS_POR_CHAVE);
 
-            Chave chave = chaveService.repository().findByRarity(rarity);
+            Chave chave = chaveService.getRepository().findByRarity(rarity);
             if (chave == null) {
                 log.info("A chave não possui registro, Registrando...");
                 chaveService.save(new Chave(0, rarity));
@@ -32,7 +32,7 @@ public record ForjarChaveService(FragmentoChaveService fragmentoChaveService,
 
     private boolean validaQuantidadeFragmentos(Rarity rarity, Integer quantidade) {
         log.info("Validando quantidade de fragmentos, para verificar se é possivel forjar");
-        boolean resut = fragmentoChaveService.repository().findByRarity(rarity).getQuantidade() >= (quantidade * Constants.FRAGMENTOS_POR_CHAVE);
+        boolean resut = fragmentoChaveService.getRepository().findByRarity(rarity).getQuantidade() >= (quantidade * Constants.FRAGMENTOS_POR_CHAVE);
         if (resut) {
             log.info("É possível forjar mais chaves");
         } else {
@@ -42,7 +42,7 @@ public record ForjarChaveService(FragmentoChaveService fragmentoChaveService,
     }
 
     public void forjarTodasChaves(Rarity rarity) {
-        Integer quantidade = fragmentoChaveService.repository().findByRarity(rarity).getQuantidade() / Constants.FRAGMENTOS_POR_CHAVE;
+        Integer quantidade = fragmentoChaveService.getRepository().findByRarity(rarity).getQuantidade() / Constants.FRAGMENTOS_POR_CHAVE;
         log.info("Forjando {} chaves do tipo {}", quantidade, rarity);
         forjarChave(rarity, quantidade);
     }
