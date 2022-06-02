@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table
+@Table(name = "bau")
 public class Bau extends EntityModel {
 
     public Bau(Integer quantidade, Rarity rarity) {

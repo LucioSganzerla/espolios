@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table
+@Table(name = "chave")
 public class Chave extends EntityModel {
 
     public Chave(Integer quantidade, Rarity rarity) {
