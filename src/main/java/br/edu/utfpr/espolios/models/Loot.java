@@ -7,15 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table(name = "loot")
 public class Loot extends BaseModel {
 
     @Setter
@@ -25,13 +23,14 @@ public class Loot extends BaseModel {
     @Column(nullable = false, name = "valor_monetario")
     private Double valorMonetario;
 
-    @Column(nullable = false, name = "adquirivel")
-    private Boolean isDropable;
+    @Setter
+    @JoinColumn(name = "inventario", nullable = false, foreignKey = @ForeignKey(name = "loot_inventario"))
+    @ManyToOne(optional = false)
+    private Inventario inventario;
 
     public Loot(Rarity rarity, Double valorMonetario) {
         this.rarity = rarity;
         this.valorMonetario = valorMonetario;
-        this.isDropable = true;
     }
 
 }
