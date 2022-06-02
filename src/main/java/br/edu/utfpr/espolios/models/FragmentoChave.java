@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table
+@Table(name = "fragmento_chave")
 public class FragmentoChave extends EntityModel {
 
     public FragmentoChave(Integer quantidade, Rarity rarity) {
