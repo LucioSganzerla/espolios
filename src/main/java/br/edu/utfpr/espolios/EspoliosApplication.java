@@ -36,9 +36,6 @@ public class EspoliosApplication {
     @Autowired
     private InventarioService inventarioService;
 
-    @Autowired
-    private LootService lootService;
-
     public static void main(String[] args) {
         SpringApplication.run(EspoliosApplication.class, args);
     }
