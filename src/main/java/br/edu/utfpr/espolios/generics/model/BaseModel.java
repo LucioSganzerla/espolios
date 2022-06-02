@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -15,7 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public class BaseModel {
+public class BaseModel implements Serializable {
 
     @Id
     @Getter
