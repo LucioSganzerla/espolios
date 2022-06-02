@@ -2,15 +2,11 @@ package br.edu.utfpr.espolios;
 
 import br.edu.utfpr.espolios.models.Bau;
 import br.edu.utfpr.espolios.models.FragmentoChave;
-import br.edu.utfpr.espolios.models.Loot;
+import br.edu.utfpr.espolios.models.Inventario;
 import br.edu.utfpr.espolios.models.enums.Rarity;
 import br.edu.utfpr.espolios.service.AbrirBauService;
-import br.edu.utfpr.espolios.service.CRUD.BauService;
-import br.edu.utfpr.espolios.service.CRUD.ChaveService;
-import br.edu.utfpr.espolios.service.CRUD.FragmentoChaveService;
-import br.edu.utfpr.espolios.service.CRUD.LootService;
+import br.edu.utfpr.espolios.service.CRUD.*;
 import br.edu.utfpr.espolios.service.ForjarChaveService;
-import br.edu.utfpr.espolios.utils.MathUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -38,6 +34,9 @@ public class EspoliosApplication {
     private AbrirBauService abrirBauService;
 
     @Autowired
+    private InventarioService inventarioService;
+
+    @Autowired
     private LootService lootService;
 
     public static void main(String[] args) {
@@ -46,15 +45,12 @@ public class EspoliosApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void doSomethingAfterStartup() {
-        log.info("Criando Loots");
-        for (int i = 0; i < 15; i++) {
-            lootService.save(new Loot(Rarity.COMMON, MathUtils.random(0, 10)));
-            lootService.save(new Loot(Rarity.RARE, MathUtils.random(10.01, 20)));
-            lootService.save(new Loot(Rarity.EPIC, MathUtils.random(20.01, 30)));
-            lootService.save(new Loot(Rarity.LEGENDARY, MathUtils.random(30.01, 200)));
-        }
-        log.info("Fim da criação dos Loots");
+        // Inventario do usuario "Logado"
+        Inventario inventario = null;
 
+        log.info("Criando um inventario para o usuario");
+        inventario = inventarioService.createInventario();
+        log.info("Inventario criado com sucesso");
 
         log.info("Adicionando fragmentos de chave...");
         fragmentoChaveService.save(new FragmentoChave(12, Rarity.COMMON));
@@ -110,18 +106,41 @@ public class EspoliosApplication {
         log.info("Listando baus...");
         bauService.log();
 
-        log.info("Abrindo baus...");
-        abrirBauService.abrirBau(Rarity.COMMON, 10);
-        abrirBauService.abrirBau(Rarity.COMMON, 2);
-        abrirBauService.abrirBau(Rarity.RARE, 3);
-        abrirBauService.abrirBau(Rarity.EPIC, 2);
-        abrirBauService.abrirBau(Rarity.LEGENDARY, 1);
+        log.info("Abrindo 10 Baus Comuns");
+        abrirBauService.abrirBau(inventario, Rarity.COMMON, 10);
+
+        log.info("Abrindo 1 Bau Epico");
+        abrirBauService.abrirBau(inventario, Rarity.EPIC, 1);
 
         log.info("Listando baus...");
         bauService.log();
 
         log.info("Listando chaves...");
         chaveService.log();
+
+        log.info("Listando inventarios...");
+        inventarioService.log();
+
+        log.info("Abrindo todas as chaves do inventario {}", inventario.getId());
+        abrirBauService.abrirBau(inventario, Rarity.COMMON, 1);
+        log.info("Loots obtidos:");
+        inventarioService.log(inventario);
+
+        log.info("Abrindo todas as chaves possiveis do inventario {}", inventario.getId());
+        abrirBauService.abrirPossiveis(inventario, Rarity.COMMON);
+        abrirBauService.abrirPossiveis(inventario, Rarity.RARE);
+        abrirBauService.abrirPossiveis(inventario, Rarity.EPIC);
+        abrirBauService.abrirPossiveis(inventario, Rarity.LEGENDARY);
+
+        log.info("Listando baus...");
+        bauService.log();
+
+        log.info("Listando chaves...");
+        chaveService.log();
+
+        log.info("Listando inventarios...");
+        inventarioService.log();
+
 
     }
 
