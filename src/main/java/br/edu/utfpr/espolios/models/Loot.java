@@ -24,7 +24,7 @@ public class Loot extends BaseModel {
     private Double valorMonetario;
 
     @Setter
-    @JoinColumn(name = "inventario", nullable = false, foreignKey = @ForeignKey(name = "loot_inventario"))
+    @JoinColumn(name = "inventario_id", nullable = false, foreignKey = @ForeignKey(name = "loot_inventario"))
     @ManyToOne(optional = false)
     private Inventario inventario;
 
