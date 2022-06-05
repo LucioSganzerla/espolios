@@ -7,6 +7,7 @@ import br.edu.utfpr.espolios.models.enums.Rarity;
 import br.edu.utfpr.espolios.service.AbrirBauService;
 import br.edu.utfpr.espolios.service.CRUD.*;
 import br.edu.utfpr.espolios.service.ForjarChaveService;
+import br.edu.utfpr.espolios.service.ReSortearService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -35,6 +36,9 @@ public class EspoliosApplication {
 
     @Autowired
     private InventarioService inventarioService;
+
+    @Autowired
+    private ReSortearService reSortearService;
 
     public static void main(String[] args) {
         SpringApplication.run(EspoliosApplication.class, args);
@@ -138,7 +142,17 @@ public class EspoliosApplication {
         log.info("Listando inventarios...");
         inventarioService.log();
 
+        inventario = inventarioService.getRepository().findById(inventario.getId()).get();
 
+        log.info("Trocando todos os loots...");
+        while (inventario.getLoots().size() >= 3) {
+            reSortearService.resortear(inventario, inventario.getLoots().get(0), inventario.getLoots().get(1), inventario.getLoots().get(2));
+            inventario = inventarioService.getRepository().findById(inventario.getId()).get();
+        }
+
+        log.info("Listando inventarios...");
+        inventarioService.log();
     }
 
 }
+
