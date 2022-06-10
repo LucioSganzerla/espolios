@@ -146,8 +146,7 @@ public class EspoliosApplication {
 
         log.info("Trocando todos os loots...");
         while (inventario.getLoots().size() >= 3) {
-            reSortearService.resortear(inventario, inventario.getLoots().get(0), inventario.getLoots().get(1), inventario.getLoots().get(2));
-            inventario = inventarioService.getRepository().findById(inventario.getId()).get();
+            inventario = reSortearService.resortear(inventario, inventario.getLoots().get(0), inventario.getLoots().get(1), inventario.getLoots().get(2));
         }
 
         log.info("Listando inventarios...");

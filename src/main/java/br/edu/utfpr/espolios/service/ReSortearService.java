@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public record ReSortearService(LootService lootService, InventarioService inventarioService) {
 
-    public void resortear(Inventario inventario, Loot loot, Loot loot2, Loot loot3) {
+    public Inventario resortear(Inventario inventario, Loot loot, Loot loot2, Loot loot3) {
         log.info("Re-sorteando loots {} {} {}",
                 inventario.getLoots().get(0).getId(),
                 inventario.getLoots().get(1).getId(),
@@ -63,8 +63,10 @@ public record ReSortearService(LootService lootService, InventarioService invent
                 log.info("Teve azar, perdeu os 3 loots");
             }
             inventarioService().getRepository().save(inventario);
+            return inventarioService.getRepository().findById(inventario.getId()).get();
         } else {
             log.info("Inventario não possui os loots");
+            return inventarioService.getRepository().findById(inventario.getId()).get();
         }
     }
 
