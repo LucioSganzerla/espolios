@@ -66,7 +66,11 @@ public record ReSortearService(LootService lootService, InventarioService invent
             return inventarioService.getRepository().findById(inventario.getId()).get();
         } else {
             log.info("Inventario não possui os loots");
-            return inventarioService.getRepository().findById(inventario.getId()).get();
+            if (inventario.getId() != null) {
+                return inventarioService.getRepository().findById(inventario.getId()).get();
+            } else {
+                return inventario;
+            }
         }
     }
 
