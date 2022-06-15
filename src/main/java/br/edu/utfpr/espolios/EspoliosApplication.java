@@ -54,10 +54,10 @@ public class EspoliosApplication {
         log.info("Inventario criado com sucesso");
 
         log.info("Adicionando fragmentos de chave...");
-        fragmentoChaveService.save(new FragmentoChave(12, Rarity.COMMON));
-        fragmentoChaveService.save(new FragmentoChave(9, Rarity.RARE));
-        fragmentoChaveService.save(new FragmentoChave(6, Rarity.EPIC));
-        fragmentoChaveService.save(new FragmentoChave(3, Rarity.LEGENDARY));
+        fragmentoChaveService.save(new FragmentoChave(15, Rarity.COMMON));
+        fragmentoChaveService.save(new FragmentoChave(15, Rarity.RARE));
+        fragmentoChaveService.save(new FragmentoChave(15, Rarity.EPIC));
+        fragmentoChaveService.save(new FragmentoChave(15, Rarity.LEGENDARY));
 
         log.info("Listando fragmentos de chave...");
         fragmentoChaveService.log();
@@ -123,7 +123,7 @@ public class EspoliosApplication {
         inventarioService.log();
 
         log.info("Abrindo todas as chaves do inventario {}", inventario.getId());
-        abrirBauService.abrirBau(inventario, Rarity.COMMON, 1);
+        abrirBauService.abrirBau(inventario, Rarity.COMMON, 2);
         log.info("Loots obtidos:");
         inventarioService.log(inventario);
 

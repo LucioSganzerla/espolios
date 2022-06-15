@@ -27,12 +27,6 @@ public class InventarioService extends BaseService<Inventario> {
         return repository.saveAndFlush(new Inventario());
     }
 
-    @Transactional
-    public List<Loot> addLoot(Inventario inventario, Loot loot) {
-        inventario.addLoot(loot);
-        return repository.saveAndFlush(inventario).getLoots();
-    }
-
     public void log(Inventario inventario) {
         log.info("Inventario: " + inventario.getId());
         for (Loot loot : inventario.getLoots()) {

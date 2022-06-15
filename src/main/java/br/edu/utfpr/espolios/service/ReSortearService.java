@@ -9,6 +9,7 @@ import br.edu.utfpr.espolios.utils.MathUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +31,9 @@ public record ReSortearService(LootService lootService, InventarioService invent
             double gastoTotal = loot.getValorMonetario() + loot2.getValorMonetario() + loot3.getValorMonetario();
 
             log.info("Removendo os loots do inventario");
-            inventario.setLoots(inventario.getLoots().stream().filter(it -> it.getId() != loot.getId() && it.getId() != loot2.getId() && it.getId() != loot3.getId()).collect(Collectors.toList()));
+            lootService.getRepository().deleteLootById(loot.getId());
+            lootService.getRepository().deleteLootById(loot2.getId());
+            lootService.getRepository().deleteLootById(loot3.getId());
 
             log.info("Gerando Rarity");
             double raridade = MathUtils.random(0, 100);
@@ -58,11 +61,10 @@ public record ReSortearService(LootService lootService, InventarioService invent
             if (rarity != null) {
                 double premio = MathUtils.random(1, 3 * raridade);
                 log.info("Você sorteou R$ " + String.format("%.2f", gastoTotal) + " e recebeu R$ " + String.format("%.2f", premio));
-                inventario.addLoot(new Loot(rarity, premio));
+                lootService.getRepository().save(new Loot(rarity, premio, inventario));
             } else {
                 log.info("Teve azar, perdeu os 3 loots");
             }
-            inventarioService().getRepository().save(inventario);
             return inventarioService.getRepository().findById(inventario.getId()).get();
         } else {
             log.info("Inventario não possui os loots");

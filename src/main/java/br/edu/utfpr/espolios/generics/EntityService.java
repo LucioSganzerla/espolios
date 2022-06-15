@@ -16,7 +16,7 @@ public abstract class EntityService<T extends EntityModel> {
 
     public void save(T bau) {
         log.info("Salvando {} {}",this.getClass().getSimpleName(), bau.getRarity());
-        getRepository().saveAndFlush(bau);
+        getRepository().save(bau);
         log.info("{} Salva Tipo {}",  this.getClass().getSimpleName(), bau.getRarity());
     }
 
@@ -24,7 +24,7 @@ public abstract class EntityService<T extends EntityModel> {
         log.info("Incrementando {} {}", this.getClass().getSimpleName(), rarity);
         T bau = getRepository().findByRarity(rarity);
         bau.setQuantidade(bau.getQuantidade() + quantity);
-        getRepository().saveAndFlush(bau);
+        getRepository().save(bau);
         log.info("Incrementou {} {}", this.getClass().getSimpleName(), rarity);
     }
 
@@ -32,7 +32,7 @@ public abstract class EntityService<T extends EntityModel> {
         log.info("Decrementando {} {}", this.getClass().getSimpleName(), rarity);
         T bau = getRepository().findByRarity(rarity);
         bau.setQuantidade(bau.getQuantidade() - quantity);
-        getRepository().saveAndFlush(bau);
+        getRepository().save(bau);
         log.info("Decrementou {} {}", this.getClass().getSimpleName(), rarity);
     }
 

@@ -28,9 +28,4 @@ public class Loot extends BaseModel {
     @ManyToOne(optional = false)
     private Inventario inventario;
 
-    public Loot(Rarity rarity, Double valorMonetario) {
-        this.rarity = rarity;
-        this.valorMonetario = valorMonetario;
-    }
-
 }
